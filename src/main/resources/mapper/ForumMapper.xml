@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ForumMapper">
+
+    <resultMap type="com.project.demo.entity.Forum" id="ForumResult">
+        <result property="forumId"    column="forum_id"    />
+        <result property="display"    column="display"    />
+        <result property="userId"    column="user_id"    />
+        <result property="nickname"    column="nickname"    />
+        <result property="hits"    column="hits"    />
+        <result property="title"    column="title"    />
+        <result property="keywords"    column="keywords"    />
+        <result property="description"    column="description"    />
+        <result property="url"    column="url"    />
+        <result property="tag"    column="tag"    />
+        <result property="img"    column="img"    />
+        <result property="content"    column="content"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="avatar"    column="avatar"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <sql id="selectForumVo">
+        select forum_id, display, user_id, nickname, hits, title, keywords, description, url, tag, img, content, create_time, update_time, avatar, type from forum
+    </sql>
+
+    <select id="selectForumList" parameterType="com.project.demo.entity.Forum" resultMap="ForumResult">
+        <include refid="selectForumVo"/>
+        <where>
+            <if test="display != null "> and display = #{display}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="nickname != null  and nickname != ''"> and nickname like concat('%', #{nickname}, '%')</if>
+            <if test="hits != null "> and hits = #{hits}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="keywords != null  and keywords != ''"> and keywords = #{keywords}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="tag != null  and tag != ''"> and tag = #{tag}</if>
+            <if test="img != null  and img != ''"> and img = #{img}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="avatar != null  and avatar != ''"> and avatar = #{avatar}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+        </where>
+    </select>
+
+    <select id="selectForumById" parameterType="Integer" resultMap="ForumResult">
+        <include refid="selectForumVo"/>
+        where forum_id = #{forumId}
+    </select>
+
+    <insert id="insertForum" parameterType="com.project.demo.entity.Forum" useGeneratedKeys="true" keyProperty="forumId">
+        insert into forum
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="display != null ">display,</if>
+            <if test="userId != null ">user_id,</if>
+            <if test="nickname != null  and nickname != ''">nickname,</if>
+            <if test="hits != null ">hits,</if>
+            <if test="title != null  and title != ''">title,</if>
+            <if test="keywords != null  and keywords != ''">keywords,</if>
+            <if test="description != null  and description != ''">description,</if>
+            <if test="url != null  and url != ''">url,</if>
+            <if test="tag != null  and tag != ''">tag,</if>
+            <if test="img != null  and img != ''">img,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="avatar != null  and avatar != ''">avatar,</if>
+            <if test="type != null  and type != ''">type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="display != null ">#{display},</if>
+            <if test="userId != null ">#{userId},</if>
+            <if test="nickname != null  and nickname != ''">#{nickname},</if>
+            <if test="hits != null ">#{hits},</if>
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="keywords != null  and keywords != ''">#{keywords},</if>
+            <if test="description != null  and description != ''">#{description},</if>
+            <if test="url != null  and url != ''">#{url},</if>
+            <if test="tag != null  and tag != ''">#{tag},</if>
+            <if test="img != null  and img != ''">#{img},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="avatar != null  and avatar != ''">#{avatar},</if>
+            <if test="type != null  and type != ''">#{type},</if>
+         </trim>
+    </insert>
+
+    <update id="updateForum" parameterType="com.project.demo.entity.Forum">
+        update forum
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="display != null ">display = #{display},</if>
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="nickname != null  and nickname != ''">nickname = #{nickname},</if>
+            <if test="hits != null ">hits = #{hits},</if>
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="keywords != null  and keywords != ''">keywords = #{keywords},</if>
+            <if test="description != null  and description != ''">description = #{description},</if>
+            <if test="url != null  and url != ''">url = #{url},</if>
+            <if test="tag != null  and tag != ''">tag = #{tag},</if>
+            <if test="img != null  and img != ''">img = #{img},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="avatar != null  and avatar != ''">avatar = #{avatar},</if>
+            <if test="type != null  and type != ''">type = #{type},</if>
+        </trim>
+        where forum_id = #{forumId}
+    </update>
+
+    <delete id="deleteForumById" parameterType="Integer">
+        delete from forum where forum_id = #{forumId}
+    </delete>
+
+    <delete id="deleteForumByIds" parameterType="String">
+        delete from forum where forum_id in
+        <foreach item="forumId" collection="array" open="(" separator="," close=")">
+            #{forumId}
+        </foreach>
+    </delete>
+
+</mapper>
