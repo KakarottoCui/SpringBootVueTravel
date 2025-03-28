@@ -1,7 +1,7 @@
 # SpringBootVueTravel
 基于SpringBoot和Vue的旅游网站订票系统设计
 
-演示视频链接：https://live.csdn.net/v/293827
+演示视频链接：https://www.bilibili.com/video/BV13m4y1C7GH/
 
 整个项目实现的功能:
 
